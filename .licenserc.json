@@ -1,3 +1,6 @@
 {
-  "**/*.rb": "# MIT License\n  # Copyright (c) 2022 Gauthier FRANCOIS"
+  "**/*.{rb,ru}": "# MIT License",
+  "**/*.{rb,ru}": "# Copyright (c) 2022 Gauthier FRANCOIS",
+  "**/*.slim": "// MIT License",
+  "**/*.slim": "// Copyright (c) 2022 Gauthier FRANCOIS"
 }

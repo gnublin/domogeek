@@ -3,6 +3,7 @@
     "private": true,
     "dependencies": {
         "@fortawesome/fontawesome-free": "*",
+        "@kt3k/license-checker": "^3.1.7",
         "uikit": "3.15.5"
     }
 }
