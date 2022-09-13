@@ -1,3 +1,5 @@
+# MIT License
+# Copyright (c) 2022 Gauthier FRANCOIS
 # frozen_string_literal: true
 
 require 'sinatra'
