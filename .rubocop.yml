@@ -1,0 +1,2 @@
+convention:Metrics/AbcSize:
+  Enabled: false
