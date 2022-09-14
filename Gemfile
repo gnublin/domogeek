@@ -5,6 +5,7 @@ source "https://rubygems.org"
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
 gem 'httparty'
+gem 'holidays'
 gem 'slim'
 gem 'yaml'
 gem 'rack'
@@ -13,3 +14,4 @@ gem 'sinatra-contrib'
 gem 'slim'
 gem 'puma'
 gem 'rufus-scheduler'
+gem 'rubocop'
