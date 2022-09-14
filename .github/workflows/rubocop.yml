@@ -1,14 +1,15 @@
-rubocop:
-on: push
-  name: Rubocop
-  runs-on: ubuntu-latest
-  timeout-minutes: 5
-  env:
-    BUNDLE_FROZEN: true
-    BUNDLE_WITH: test
-    BUNDLE_WITHOUT: local
-  steps:
-    - uses: actions/checkout@v3
-    - uses: ruby/setup-ruby@v1
-    - run: bundle exec rubocop --cache=true --cache-root=/tmp/rubocop
+name: Rubocop
+on: [push, pull_request]
+jobs:
+  rubocop:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      BUNDLE_FROZEN: true
+      BUNDLE_WITH: test
+      BUNDLE_WITHOUT: local
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ruby/setup-ruby@v1
+      - run: bundle exec rubocop --cache=true --cache-root=/tmp/rubocop
 
