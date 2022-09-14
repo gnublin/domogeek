@@ -3,7 +3,7 @@
 # frozen_string_literal: true
 
 require 'bundler/setup'
-require './app/app.rb'
+require './app/app'
 
 Bundler.require :default, :development
 run DomoGeek
