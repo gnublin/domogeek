@@ -11,5 +11,5 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: ruby/setup-ruby@v1
-      - run: bundle exec rubocop --cache=true --cache-root=/tmp/rubocop
+      - run: bundle install && bundle exec rubocop --cache=true --cache-root=/tmp/rubocop
 
