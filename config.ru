@@ -4,6 +4,7 @@
 
 require 'bundler/setup'
 require './app/app'
+require 'logger'
 
 Bundler.require :default, :development
 run DomoGeek
