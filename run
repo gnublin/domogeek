@@ -3,8 +3,12 @@
 # Copyright (c) 2022 Gauthier FRANCOIS
 
 export RACK_ENV=production
-#export RACK_LOGFILE='/var/log/sinatra.log'
-export RACK_LOGFILE='/tmp/tata.log'
+
+# Mandatory for Ruby environment manager like RVM or RBENV
+source ~/.bashrc
+
+# Change home directory for Sinatra application
+export HOME=/var/www/domogeek
 
 if [ "$EUID" -eq 0 ]
   then echo "Please don't run as root"
@@ -18,4 +22,4 @@ else
   port=$1
 fi
 
-bundle exec bundle exec rackup -p $port
+bundle exec rackup -p $port
