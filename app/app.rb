@@ -13,6 +13,18 @@ require_relative '../lib/helpers'
 
 # DomoGeek application
 class DomoGeek < Sinatra::Application
+  configure :production do
+    log_file_path = ENV.fetch('RACK_LOGFILE', '/var/log/sinatra.log')
+    FileUtils.touch(log_file_path) unless File.exist? log_file_path
+    raise "File #{log_file_path} is not writable" unless File.writable?(log_file_path)
+
+    log_file = File.new(log_file_path, 'a')
+    $stdout.reopen(log_file)
+    $stderr.reopen(log_file)
+    $stdout.sync = true
+    $stderr.sync = true
+  end
+
   set :root, "#{File.dirname(__FILE__)}/.."
   set :slim, layout: :_layout
   set :public_folder, 'node_modules'

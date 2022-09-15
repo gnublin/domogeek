@@ -1,0 +1,21 @@
+#!/bin/bash
+# MIT License
+# Copyright (c) 2022 Gauthier FRANCOIS
+
+export RACK_ENV=production
+#export RACK_LOGFILE='/var/log/sinatra.log'
+export RACK_LOGFILE='/tmp/tata.log'
+
+if [ "$EUID" -eq 0 ]
+  then echo "Please don't run as root"
+  exit
+fi
+
+if [ -z $1 ]
+then
+  port=8082
+else
+  port=$1
+fi
+
+bundle exec bundle exec rackup -p $port
