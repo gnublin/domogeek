@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
+gem 'geo_names'
 gem 'holidays'
 gem 'httparty'
 gem 'icalendar', '~> 2.8.0'

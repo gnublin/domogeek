@@ -3,7 +3,13 @@
 # frozen_string_literal: true
 
 require 'bundler/setup'
+require 'geo_names'
 require './app/domogeek'
 
 Bundler.require :default, :development
+
+GeoNames.configure do |config|
+  config.username = ENV['GEONAMES_USERNAME']
+end
+
 run DomoGeek
