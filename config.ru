@@ -10,7 +10,6 @@ Bundler.require :default, :development
 
 GeoNames.configure do |config|
   config.username = ENV['GEONAMES_USERNAME']
-  p config.username
 end
 
 run DomoGeek
