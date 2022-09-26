@@ -38,6 +38,13 @@ class DomoGeek < Sinatra::Application
     @result.to_json
   end
 
+  get ['/myip', '/myip/:responsetype'] do
+    responsetype = params[:responsetype] == 'json' ? 'json' : 'text'
+    @result = { myip: request.ip }
+    content_type responsetype
+    responsetype == 'json' ? @result.to_json : request.ip
+  end
+
   get '/404' do
     slim :not_found
   end
