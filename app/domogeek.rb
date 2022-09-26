@@ -46,9 +46,9 @@ class DomoGeek < Sinatra::Application
   end
 
   get '/geolocation/:city' do
-    res_city = GeoNames::Search.search({name: params[:city]})
-    @result = {latitude: 0, longitude: 0 }
-    unless res_city['totalResultsCount'] == 0
+    res_city = GeoNames::Search.search({ name: params[:city] })
+    @result = { latitude: 0, longitude: 0 }
+    unless (res_city['totalResultsCount']).zero?
       @result[:latitude] = res_city['geonames'].first['lat']
       @result[:longitude] = res_city['geonames'].first['lng']
     end
