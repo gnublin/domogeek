@@ -45,11 +45,34 @@ class DomoGeek < Sinatra::Application
     responsetype == 'json' ? @result.to_json : request.ip
   end
 
-  get '/404' do
-    slim :not_found
+  get '/geolocation/:city' do
+    res_city = GeoNames::Search.search({name: params[:city]})
+    @result = {latitude: 0, longitude: 0 }
+    unless res_city['totalResultsCount'] == 0
+      @result[:latitude] = res_city['geonames'].first['lat']
+      @result[:longitude] = res_city['geonames'].first['lng']
+    end
+    content_type :json
+    @result.to_json
+  end
+
+  get ['/404', '/404/:responsetype'] do
+    if params[:responsetype] == 'json'
+      content_type :json
+      { http_status_code: '404', reason: 'Not implemented yet' }.to_json
+    else
+      content_type :html
+      slim :not_found
+    end
+  end
+
+  get '/400/json/:err_message' do
+    status 400
+    content_type :json
+    { http_status_code: '400', reason: err_message }.to_json
   end
 
   get '/*' do
-    redirect '/404'
+    redirect '/404/json'
   end
 end
