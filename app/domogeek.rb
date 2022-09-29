@@ -2,6 +2,7 @@
 # Copyright (c) 2022 Gauthier FRANCOIS
 # frozen_string_literal: true
 
+require 'active_support/all'
 require 'sinatra'
 require 'sinatra/base'
 require 'slim'
@@ -58,7 +59,7 @@ class DomoGeek < Sinatra::Application
     @result.to_json
   end
 
-  get '/sun/:city/:sunrequest/:date/:responsetype' do
+  get ['/sun/:city/:sunrequest/:date', '/sun/:city/:sunrequest/:date/:responsetype'] do
     @result = {}
     datereq = Time.now.strftime('%Y-%m-%d')
     datereq = params[:date] unless params[:date] == 'now'
@@ -75,11 +76,12 @@ class DomoGeek < Sinatra::Application
     return {} unless sun_details['status'] == 'OK'
 
     sun_details_res = sun_details['results']
+    Time.zone = 'Paris'
     @result = {
       dayduration: sun_details_res['day_length'].split(':')[0..1].join(':'),
-      sunset: Time.parse("#{sun_details_res['sunset']} UTC").localtime.strftime('%R'),
-      sunrise: Time.parse("#{sun_details_res['sunrise']} UTC").localtime.strftime('%R'),
-      zenith: Time.parse("#{sun_details_res['solar_noon']} UTC").localtime.strftime('%R')
+      sunset: Time.parse("#{sun_details_res['sunset']} UTC").in_time_zone.strftime('%R'),
+      sunrise: Time.parse("#{sun_details_res['sunrise']} UTC").in_time_zone.strftime('%R'),
+      zenith: Time.parse("#{sun_details_res['solar_noon']} UTC").in_time_zone.strftime('%R')
     }
     return @result[params[:sunrequest].to_sym] unless params[:sunrequest] == 'all'
 
