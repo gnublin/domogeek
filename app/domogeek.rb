@@ -79,7 +79,7 @@ class DomoGeek < Sinatra::Application
       dayduration: sun_details_res['day_length'].split(':')[0..1].join(':'),
       sunset: Time.parse("#{sun_details_res['sunset']} UTC").localtime.strftime('%R'),
       sunrise: Time.parse("#{sun_details_res['sunrise']} UTC").localtime.strftime('%R'),
-      zenith: Time.parse("#{sun_details_res['solar_noon']} UTC").localtime.strftime('%R'),
+      zenith: Time.parse("#{sun_details_res['solar_noon']} UTC").localtime.strftime('%R')
     }
     return @result[params[:sunrequest].to_sym] unless params[:sunrequest] == 'all'
 
