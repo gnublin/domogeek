@@ -10,6 +10,7 @@ require 'puma'
 require 'pry'
 
 require_relative '../lib/helpers'
+require_relative '../lib/date'
 
 # DomoGeek application
 class DomoGeek < Sinatra::Application
@@ -54,6 +55,14 @@ class DomoGeek < Sinatra::Application
     end
     content_type :json
     @result.to_json
+  end
+
+  get ['/season', '/season/:responsetype'] do
+    responsetype = params[:responsetype] == 'json' ? 'json' : 'text'
+    season = Date.today.season
+    content_type responsetype
+    @result = { 'season' => season }
+    responsetype == 'json' ? @result.to_json : season
   end
 
   get ['/404', '/404/:responsetype'] do
