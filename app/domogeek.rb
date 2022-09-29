@@ -11,6 +11,7 @@ require 'pry'
 
 require_relative '../lib/helpers'
 require_relative '../lib/date'
+require_relative '../lib/sun'
 
 # DomoGeek application
 class DomoGeek < Sinatra::Application
@@ -54,6 +55,34 @@ class DomoGeek < Sinatra::Application
       @result[:longitude] = res_city['geonames'].first['lng']
     end
     content_type :json
+    @result.to_json
+  end
+
+  get '/sun/:city/:sunrequest/:date/:responsetype' do
+    @result = {}
+    datereq = Time.now.strftime('%Y-%m-%d')
+    datereq = params[:date] unless params[:date] == 'now'
+    responsetype = params[:responsetype] == 'json' ? 'json' : 'text'
+    content_type responsetype
+
+    res_city = GeoNames::Search.search({ name: params[:city] })
+    return {} if (res_city['totalResultsCount']).zero?
+
+    lat = res_city['geonames'].first['lat']
+    lng = res_city['geonames'].first['lng']
+
+    sun_details = SunHelper.details(lng, lat, datereq)
+    return {} unless sun_details['status'] == 'OK'
+
+    sun_details_res = sun_details['results']
+    @result = {
+      dayduration: sun_details_res['day_length'].split(':')[0..1].join(':'),
+      sunset: Time.parse("#{sun_details_res['sunset']} UTC").localtime.strftime('%R'),
+      sunrise: Time.parse("#{sun_details_res['sunrise']} UTC").localtime.strftime('%R'),
+      zenith: Time.parse("#{sun_details_res['solar_noon']} UTC").localtime.strftime('%R'),
+    }
+    return @result[params[:sunrequest].to_sym] unless params[:sunrequest] == 'all'
+
     @result.to_json
   end
 
