@@ -8,7 +8,8 @@ require 'icalendar'
 # Helper to know all about dates
 class DateHelpers
   def self.bank_holidays?(datereq)
-    Holidays.on(datereq, :fr).map { |a| a[:name] }.empty? ? 'False' : holidays.first
+    holidays = Holidays.on(datereq, :fr).map { |a| a[:name] }
+    holidays.empty? ? 'False' : holidays.first
   end
 
   def self.weekend?(datereq)
